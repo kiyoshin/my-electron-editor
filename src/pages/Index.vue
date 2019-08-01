@@ -36,7 +36,11 @@
                 :name="item.isFile ? 'insert_drive_file' : 'folder'"
                 />
             </q-item-section>
-            <q-item-section>{{ item.name }}</q-item-section>
+            <q-item-section
+              :class="item === currentFile ? 'text-bold' : ''"
+              >
+              {{ item.name }}
+            </q-item-section>
           </q-item>
         </q-list>
       </div>
