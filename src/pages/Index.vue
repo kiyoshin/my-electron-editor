@@ -4,6 +4,11 @@
       <!-- ヘッダー (フォルダパス) -->
       <div class="col-xs-12">
         <q-field dense dark borderless>
+          <template v-slot:before>
+            <q-icon name="save" class="cursor-pointer"
+              @click="saveFile()"
+            />
+          </template>
           <template v-slot:prepend>
             <q-icon name="folder" />
           </template>
@@ -16,7 +21,7 @@
               >
               <q-breadcrumbs-el
                 v-for="breadcrumb in breadcrumbs" :key="`breadcrumb_${breadcrumb.label}`"
-                :label="breadcrumb.label"
+                :label="breadcrumb.label" class="cursor-pointer"
                 @click="moveCurrentDir(breadcrumb.absolutePath)"
                 />
             </q-breadcrumbs>
@@ -182,6 +187,12 @@ export default {
       if (dirs) {
         this.moveCurrentDir(dirs.shift());
       }
+    },
+    saveFile() {
+      if (!this.currentFile) return;
+      fs.writeFile(this.currentFile.absolutePath, this.editor.getValue(), (error) => {
+        if (error != null) console.log(error);
+      });
     },
   },
   mounted() {
